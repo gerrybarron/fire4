@@ -29,7 +29,7 @@ function startRefresh(){
   getDevices();
   getDeviceStatus();
   addMarker();
-  
+  setDirection();
 }
 
 setInterval(function(){startRefresh()}, 10000);
@@ -205,7 +205,7 @@ function initMap() {
    	// Adds a marker at the center of the map.
     addMarkerFD(firedept);
     addMarker();
-    
+    setDirection();
 }//end of initMap
 
  function addMarkerFD(location) {
@@ -221,17 +221,35 @@ function addMarker(location) {
 	for(i=0; i<arrayDevice.length; i++){
 		if (aryHum[i]>=60 && aryTemp[i]<=30 && aryGas[i]<=50) {
       		vicon = "img/normal-small-size.png";
-      		directionsDisplay.setMap(null);
+      		//directionsDisplay.setMap(null);
     	}
     	else if(aryHum[i]<=60 && aryTemp[i]<=30 && aryGas[i]<=50){
       		vicon = "img/alert-small-size.png";
-      		directionsDisplay.setMap(null);
+      		//directionsDisplay.setMap(null);
     	}
     	else if(aryHum[i]>=60 && aryTemp[i]>=30 && aryGas[i]<=50){
       		vicon = "img/alert-small-size.png";
-      		directionsDisplay.setMap(null);
+      		//directionsDisplay.setMap(null);
     	}
     	else if(aryHum[i]<=60 && aryTemp[i]>=30 && aryGas[i]<=50){
+            document.getElementById("dEnd").value = String(aryLat[i]+", "+aryLong[i]);
+            directionsDisplay.setMap(map);
+            setDirection();
+            document.getElementById("mHead").innerHTML = "Fire threat in " + aryLoc[i];
+            directionsDisplay.setPanel(document.getElementById('panel'));
+            $("#trigmode").trigger("click");
+            vicon = "img/danger-small-size.png";
+    	}
+    	else if(aryHum[i]>=60 && aryTemp[i]<=30 && aryGas[i]>=50){
+            document.getElementById("dEnd").value = String(aryLat[i]+", "+aryLong[i]);
+            directionsDisplay.setMap(map);
+            setDirection();
+            document.getElementById("mHead").innerHTML = "Fire threat in " + aryLoc[i];
+            directionsDisplay.setPanel(document.getElementById('panel'));
+            $("#trigmode").trigger("click");
+            vicon = "img/danger-small-size.png";
+    	}
+    	else if(aryHum[i]<=60 && aryTemp[i]<=30 && aryGas[i]>=50){
             document.getElementById("dEnd").value = String(aryLat[i]+", "+aryLong[i]);
             directionsDisplay.setMap(map);
             setDirection();
